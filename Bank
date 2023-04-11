@@ -1,0 +1,99 @@
+create table customer(cid int  primary key,cnmae varchar(20),city varchar(20));
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> desc customer;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| cid   | int(11)     | NO   | PRI | NULL    |       |
+| cnmae | varchar(20) | YES  |     | NULL    |       |
+| city  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+create table branch(bid int primary key,bname varchar(20),city varchar(15));
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> desc branch;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| bid   | int(11)     | NO   | PRI | NULL    |       |
+| bname | varchar(20) | YES  |     | NULL    |       |
+| city  | varchar(15) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+ create table borrower(loanno int primary key,cid int,bid int,amount float,foreign key(cid)references customer(cid) on delete cascade,foreign key(bid)references branch(bid)on delete cascade);
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> desc borrower;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| loanno | int(11) | NO   | PRI | NULL    |       |
+| cid    | int(11) | YES  | MUL | NULL    |       |
+| bid    | int(11) | YES  | MUL | NULL    |       |
+| amount | float   | YES  |     | NULL    |       |
++--------+---------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+ create table account(accno int primary key,cid int,bid int,amount float,adate date,foreign key(amount)references borrower(amount),foreign key(cid)referen
+ces customer(cid),foreign key (bid)references branch(bid));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> create table account(accno int primary key,cid int references customer(cid),bid int references branch(bid),amount int references borrower(amount),adate date);;
+ desc account;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| accno  | int(11) | NO   | PRI | NULL    |       |
+| cid    | int(11) | YES  |     | NULL    |       |
+| bid    | int(11) | YES  |     | NULL    |       |
+| amount | int(11) | YES  |     | NULL    |       |
+| adate  | date    | YES  |     | NULL    |       |
++--------+---------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+ insert into account values(1001,111,100,25000.0,'2022-05-4');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into account values(1002,112,102,30000,'2021-05-3');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into account values(1003,113,103,500,'2022-05-14');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into account values(1004,114,104,10000,'2029-05-15');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into account values(1005,115,105,9500,'2018-04-25');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into account values(1006,116,106,95000,'2019-04-2');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from account;
++-------+------+------+--------+------------+
+| accno | cid  | bid  | amount | adate      |
++-------+------+------+--------+------------+
+|  1001 |  111 |  100 |  25000 | 2022-05-04 |
+|  1002 |  112 |  102 |  30000 | 2021-05-03 |
+|  1003 |  113 |  103 |    500 | 2022-05-14 |
+|  1004 |  114 |  104 |  10000 | 2029-05-15 |
+|  1005 |  115 |  105 |   9500 | 2018-04-25 |
+|  1006 |  116 |  106 |  95000 | 2019-04-02 |
++-------+------+------+--------+------------+
+6 rows in set (0.01 sec)
+insert into customer values(111,'amal','kochi'),(112,'aju','calicut'),(113,'anu','kochi'),(114,'ammu','trivandram'),(115,'ananya','eranakulam'),(116,'kiran','mg road');
+Query OK, 6 rows affected (0.04 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++------+--------+------------+
+| cid  | cname  | city       |
++------+--------+------------+
+|  111 | amal   | kochi      |
+|  112 | aju    | calicut    |
+|  113 | anu    | kochi      |
+|  114 | ammu   | trivandram |
+|  115 | ananya | eranakulam |
+|  116 | kiran  | mg road    |
++------+--------+------------+
+6 rows in set (0.00 sec)
