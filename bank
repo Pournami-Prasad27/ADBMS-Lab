@@ -1,0 +1,209 @@
+mysql -u mca2243 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database employee;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> drop database employee;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create databse Bank;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databse Bank' at line 1
+mysql> create database Bank;
+ERROR 1007 (HY000): Can't create database 'Bank'; database exists
+mysql> create database bank;
+ERROR 1007 (HY000): Can't create database 'bank'; database exists
+mysql> drop database bank;;
+Query OK, 4 rows affected (0.47 sec)
+
+ERROR: 
+No query specified
+
+mysql> drop database bank;
+ERROR 1008 (HY000): Can't drop database 'bank'; database doesn't exist
+mysql> drop database Bank;
+Query OK, 3 rows affected (0.38 sec)
+
+mysql> create database Bank;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use database Bank;
+ERROR 1049 (42000): Unknown database 'database'
+mysql> use  Bank;
+Database changed
+mysql> create table customer(cid int primary key,ename varchar(10),city varchar(20));
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> desc customer;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| cid   | int(11)     | NO   | PRI | NULL    |       |
+| ename | varchar(10) | YES  |     | NULL    |       |
+| city  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table borrower(loanno int primary key,cid int,bid int ,amount float,foreign key(cid) references customer(cid)on delete cascade,foregin key(bid)references branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(bid)references branch(bid)on delete cascade)' at line 1
+mysql> create table borrower(loanno int primary key,cid int,bid int ,amount float,foreign key (cid) references customer (cid)on delete cascade,foregin key (bid)references branch (bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key (bid)references branch (bid)on delete cascade)' at line 1
+mysql> create table borrower(loanno int primar);
+[1]+  Stopped                 mysql -u mca2243 -p
+mca@CC1-28:~$ mysql -u mca2243 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Bank;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create table branch(bid int primary key,bname varchar(20),city varchar(10));
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> desc branch;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| bid   | int(11)     | NO   | PRI | NULL    |       |
+| bname | varchar(20) | YES  |     | NULL    |       |
+| city  | varchar(10) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table borrower(loanno int,cid int ,bid int,amount float,foriegn key(cid)references customer(cid) on delete cascade,foreign key(bid)references branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(cid)references customer(cid) on delete cascade,foreign key(bid)references br' at line 1
+mysql> create table borrower(loanno int,cid int ,bid int,amount float,foriegn key(cid)references customer(cid)on delete cascade,foreign key(bid)references branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(cid)references customer(cid)on delete cascade,foreign key(bid)references bra' at line 1
+mysql> create table borrower(loanno int,cid int ,bid int,amount float,foriegn key(cid)references customer(cid)on delete cascade,foreign key(bid)references branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(cid)references customer(cid)on delete cascade,foreign key(bid)references bra' at line 1
+mysql> create table borrower(loanno int primary key,cid int ,bid int,amount floa
+t,foriegn key(cid) references customer(cid)on delete cascade,foreign key(bid) references branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(cid) references customer(cid)on delete cascade,foreign key(bid) references b' at line 1
+mysql> create table borrower(loanno int primary key,cid int ,bid int,amount float,foriegn key(cid)references customer(cid)on delete cascade,foreign key(bid)references branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(cid)references customer(cid)on delete cascade,foreign key(bid)references bra' at line 1
+mysql> create table borrower(loanno int primary key,cid int ,bid int,amount float,foreign key(cid)references customer(cid)on delete cascade,foreign key(bid)references branch(bid)on delete cascade);
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> desc borrower;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| loanno | int(11) | NO   | PRI | NULL    |       |
+| cid    | int(11) | YES  | MUL | NULL    |       |
+| bid    | int(11) | YES  | MUL | NULL    |       |
+| amount | float   | YES  |     | NULL    |       |
++--------+---------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> create account(accno int primary key,cid int,bid int,amount float,adate date,foregin key(cid)references customer(cid),foregin key(bid)refernces branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'account(accno int primary key,cid int,bid int,amount float,adate date,foregin ke' at line 1
+mysql> create account(accno int primary key,cid int,bid int,amount float,adate date,foregin key(cid)references customer(cid),foregin key(bid)references branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'account(accno int primary key,cid int,bid int,amount float,adate date,foregin ke' at line 1
+mysql> create table  account(accno int primary key,cid int,bid int,amount float,
+adate date,foregin key(cid)references customer(cid),foregin key(bid)references branch(bid)on delete cascade);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(cid)references customer(cid),foregin key(bid)references branch(bid)on delete' at line 1
+mysql> create table  account(accno int primary key,cid int,bid int,amount float,adate date,foreign key(cid)references customer(cid),foreign key(bid)references branch(bid)on delete cascade);;
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> desc account;
++--------+---------+------+-----+---------+-------+
+| Field  | Type    | Null | Key | Default | Extra |
++--------+---------+------+-----+---------+-------+
+| accno  | int(11) | NO   | PRI | NULL    |       |
+| cid    | int(11) | YES  | MUL | NULL    |       |
+| bid    | int(11) | YES  | MUL | NULL    |       |
+| amount | float   | YES  |     | NULL    |       |
+| adate  | date    | YES  |     | NULL    |       |
++--------+---------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into customer values(101,'abc','kochi'),(102,'bcd','calicut'),(103,'cde','kochi'),(104,'efg','trivandram'),(105,'fgh','mg road');
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++-----+-------+------------+
+| cid | ename | city       |
++-----+-------+------------+
+| 101 | abc   | kochi      |
+| 102 | bcd   | calicut    |
+| 103 | cde   | kochi      |
+| 104 | efg   | trivandram |
+| 105 | fgh   | mg road    |
++-----+-------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into branch values(201,'aaa','mg road'),(202,'bbb','calicut'),(203,'ccc','trivandram'),(204,'eee','mg road'),(205,'fff','kochi');
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from branch;
++-----+-------+------------+
+| bid | bname | city       |
++-----+-------+------------+
+| 201 | aaa   | mg road    |
+| 202 | bbb   | calicut    |
+| 203 | ccc   | trivandram |
+| 204 | eee   | mg road    |
+| 205 | fff   | kochi      |
++-----+-------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into  account values(1001,101,201,210000,'2022-06-25),(1000,102,30000,'2021-07-18),(10003,103,202,71500,'2022-12-13'),(1004,104,18000,'2012-03-20'),(1005,105,203,95000,'2018-01-20');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2021-07-18),(10003,103,202,71500,'2022-12-13'),(1004,104,18000,'2012-03-20'),(10' at line 1
+mysql> insert into  account values(1001,101,201,210000,'2022-06-25),(1000,102,202,30000,'2021-07-18),(10003,103,203,71500,'2022-12-13'),(1004,104,204,18000,'2012-03-20'),(1005,105,203,95000,'2018-01-20');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2021-07-18),(10003,103,203,71500,'2022-12-13'),(1004,104,204,18000,'2012-03-20')' at line 1
+mysql> insert into  account values(1001,101,201,210000,'2022-06-25'),(1000,102,202,30000,'2021-07-18'),(10003,103,203,71500,'2022-12-13'),(1004,104,204,18000,'2012-03-20'),(1005,105,203,95000,'2018-01-20');
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from account;
++-------+------+------+--------+------------+
+| accno | cid  | bid  | amount | adate      |
++-------+------+------+--------+------------+
+|  1000 |  102 |  202 |  30000 | 2021-07-18 |
+|  1001 |  101 |  201 | 210000 | 2022-06-25 |
+|  1004 |  104 |  204 |  18000 | 2012-03-20 |
+|  1005 |  105 |  203 |  95000 | 2018-01-20 |
+| 10003 |  103 |  203 |  71500 | 2022-12-13 |
++-------+------+------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into  borrower values(2001,102,203,80000),(2002,105,205,10000),(2003,104,204,40000);
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from borrower;
++--------+------+------+--------+
+| loanno | cid  | bid  | amount |
++--------+------+------+--------+
+|   2001 |  102 |  203 |  80000 |
+|   2002 |  105 |  205 |  10000 |
+|   2003 |  104 |  204 |  40000 |
++--------+------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> 
