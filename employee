@@ -1,0 +1,258 @@
+ create database emp;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use emp;
+Database changed
+mysql> create table region(regionid int primary key,regionname varchar(20));
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> desc region;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| regionid   | int(11)     | NO   | PRI | NULL    |       |
+| regionname | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+create table country(countryid int primary key,countryname varchar(20),regionid int,foreign key(regionid) references region(regionid) on delete cascade);
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> desc country;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| countryid   | int(11)     | NO   | PRI | NULL    |       |
+| countryname | varchar(20) | YES  |     | NULL    |       |
+| regionid    | int(11)     | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+create table department(depid int primary key,depname varchar(20),locationid int, foreign key(locationid) references location(locationid) on delete cascade);
+Query OK, 0 rows affected (0.21 sec)
+mysql> desc department;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| depid      | int(11)     | NO   | PRI | NULL    |       |
+| depname    | varchar(20) | YES  |     | NULL    |       |
+| locationid | int(11)     | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+create table location(locationid int primary key,streetadrs varchar(20),postalcode int,city varchar(20),stateprov varchar(20),countryid int, foreign key(countryid) references country(countryid) on delete cascade);
+Query OK, 0 rows affected (0.27 sec)
+mysql> desc location;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| locationid | int(11)     | NO   | PRI | NULL    |       |
+| streetadrs | varchar(20) | YES  |     | NULL    |       |
+| postalcode | int(11)     | YES  |     | NULL    |       |
+| city       | varchar(20) | YES  |     | NULL    |       |
+| stateprov  | varchar(20) | YES  |     | NULL    |       |
+| countryid  | int(11)     | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+create table employee(empid int primary key,fname varchar(20),lname varchar(20),email varchar(50),phno int,hiredate date,jobid int,salary float,managerid int,depid int, foreign key(depid) references department(depid) on delete cascade);
+Query OK, 0 rows affected (0.21 sec)
+create table jobs(jobid int primary key,jobtitle varchar(20),minsalary float,maxsalary float);
+Query OK, 0 rows affected (0.18 sec)
+mysql> desc jobs;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| jobid     | int(11)     | NO   | PRI | NULL    |       |
+| jobtitle  | varchar(20) | YES  |     | NULL    |       |
+| minsalary | float       | YES  |     | NULL    |       |
+| maxsalary | float       | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc employee;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| empid     | int(11)     | NO   | PRI | NULL    |       |
+| fname     | varchar(20) | YES  |     | NULL    |       |
+| lname     | varchar(20) | YES  |     | NULL    |       |
+| email     | varchar(50) | YES  |     | NULL    |       |
+| phno      | int(11)     | YES  |     | NULL    |       |
+| hiredate  | date        | YES  |     | NULL    |       |
+| jobid     | int(11)     | YES  |     | NULL    |       |
+| salary    | float       | YES  |     | NULL    |       |
+| managerid | int(11)     | YES  |     | NULL    |       |
+| depid     | int(11)     | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> insert into region values(100, 'india');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into region values(101, 'China');
+Query OK, 1 row affected (0.02 sec)
+insert into region values(102, 'Japan');
+Query OK, 1 row affected (0.04 sec)select * from region;
++----------+------------+
+| regionid | regionname |
++----------+------------+
+|      100 | india      |
+|      101 | China      |
+|      102 | Japan      |
++----------+------------+
+3 rows in set (0.00 sec)
+insert into location values(1700,'ABC',689,'Delhi','bb',124);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into location values(1701,'ADC',688,'Delhi','bC',123);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into location values(1702,'ADC',032,'GGG','dC',127);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into location values(1704,'ADD',045,'FFF','jk',125);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select *from location;
++------------+------------+------------+-------+-----------+-----------+
+| locationid | streetadrs | postalcode | city  | stateprov | countryid |
++------------+------------+------------+-------+-----------+-----------+
+|       1700 | ABC        |        689 | Delhi | bb        |       124 |
+|       1701 | ADC        |        688 | Delhi | bC        |       123 |
+|       1702 | ADC        |         32 | GGG   | dC        |       127 |
+|       1704 | ADD        |         45 | FFF   | jk        |       125 |
++------------+------------+------------+-------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> mysql> insert into department values(1,'finanace',1700);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into department values(2,'finanace',1700);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into department values(3,'accounts',1702);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into department values(4,'test',1704);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from department;
++-------+----------+------------+
+| depid | depname  | locationid |
++-------+----------+------------+
+|     1 | finanace |       1700 |
+|     2 | finanace |       1700 |
+|     3 | accounts |       1702 |
+|     4 | test     |       1704 |
++-------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+insert into employee values(111,'zen','samuel','samzen@gmail.com',885214647,'2021-02-01',147,10000,101,1);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee values(112,'smith','Tayor','samzen@gmail.com',885214645,'2018-03-15',147,15000,101,1);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values(113,'smith','Das','smithn@gmail.com',985214645,'2020-03-21',145,10000,101,2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values(114,'zaviour','sam','zavsam@gmail.com',985314645,'2022-05-26',147,20000,201,3);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee values(115,'nila','Tayor','nila@gmail.com',985314699,'202
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from employee;
++-------+---------+--------+------------------+-----------+------------+-------+--------+-----------+-------+
+| empid | fname   | lname  | email            | phno      | hiredate   | jobid | salary | managerid | depid |
++-------+---------+--------+------------------+-----------+------------+-------+--------+-----------+-------+
+|   111 | zen     | samuel | samzen@gmail.com | 885214647 | 2021-02-01 |   147 |  10000 |       101 |     1 |
+|   112 | smith   | Tayor  | samzen@gmail.com | 885214645 | 2018-03-15 |   147 |  15000 |       101 |     1 |
+|   113 | smith   | Das    | smithn@gmail.com | 985214645 | 2020-03-21 |   145 |  10000 |       101 |     2 |
+|   114 | zaviour | sam    | zavsam@gmail.com | 985314645 | 2022-05-26 |   147 |  20000 |       201 |     3 |
+|   115 | nila    | Tayor  | nila@gmail.com   | 985314699 | 2023-05-30 |   149 |   8000 |       200 |     4 |
++-------+---------+--------+------------------+-----------+------------+-------+--------+-----------+-------+
+5 rows in set (0.01 sec)
+
+mysql> 
+ create table dependent(depndid int,fname varchar(20),lname varchar(20),rlnshp varchar(20),empid int,foreign key(empid) references employee(empid) on delete cascade);
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> insert into dependent values(1000,'ABC', 'CDE','sister',113);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into dependent values(1001,'AAA', 'CCC','sister',115);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into dependent values(1002,'TTT', 'JJJ','Brotherr',111);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into dependent values(1003,'GGG', 'KKK','Brotherr',114);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into dependent values(1004,'GFK', 'KGF','Sister',112);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM dependent;
++---------+-------+-------+----------+-------+
+| depndid | fname | lname | rlnshp   | empid |
++---------+-------+-------+----------+-------+
+|    1000 | ABC   | CDE   | sister   |   113 |
+|    1001 | AAA   | CCC   | sister   |   115 |
+|    1002 | TTT   | JJJ   | Brotherr |   111 |
+|    1003 | GGG   | KKK   | Brotherr |   114 |
+|    1004 | GFK   | KGF   | Sister   |   112 |
++---------+-------+-------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> mysql> insert into jobs values(1,'manager',10000,30000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into jobs values(2,'employee',8000,20000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into jobs values(3,'manager',10000,25000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into jobs values(4,'HR',10000,20000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from jobs;
++-------+----------+-----------+-----------+
+| jobid | jobtitle | minsalary | maxsalary |
++-------+----------+-----------+-----------+
+|     1 | manager  |     10000 |     30000 |
+|     2 | employee |      8000 |     20000 |
+|     3 | manager  |     10000 |     25000 |
+|     4 | HR       |     10000 |     20000 |
++-------+----------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> 
+mysql> desc dependent;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| depndid | int(11)     | YES  |     | NULL    |       |
+| fname   | varchar(20) | YES  |     | NULL    |       |
+| lname   | varchar(20) | YES  |     | NULL    |       |
+| rlnshp  | varchar(20) | YES  |     | NULL    |       |
+| empid   | int(11)     | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql> select * from employee e join department l on e.depid=l.depid where l.locationid=1700;
++-------+-------+--------+------------------+-----------+------------+-------+--------+-----------+-------+-------+----------+------------+
+| empid | fname | lname  | email            | phno      | hiredate   | jobid | salary | managerid | depid | depid | depname  | locationid |
++-------+-------+--------+------------------+-----------+------------+-------+--------+-----------+-------+-------+----------+------------+
+|   111 | zen   | samuel | samzen@gmail.com | 885214647 | 2021-02-01 |   147 |  10000 |       101 |     1 |     1 | finanace |       1700 |
+|   112 | smith | Tayor  | samzen@gmail.com | 885214645 | 2018-03-15 |   147 |  15000 |       101 |     1 |     1 | finanace |       1700 |
+|   113 | smith | Das    | smithn@gmail.com | 985214645 | 2020-03-21 |   145 |  10000 |       101 |     2 |     2 | finanace |       1700 |
++-------+-------+--------+------------------+-----------+------------+-------+--------+-----------+-------+-------+----------+------------+
+3 rows in set (0.03 sec)
+
+mysql> 
+
+
+
+
+
+
+
